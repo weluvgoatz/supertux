@@ -95,6 +95,7 @@
 #include "object/invisible_wall.hpp"
 #include "object/ispy.hpp"
 #include "object/lantern.hpp"
+#include "object/letter.hpp"
 #include "object/level_time.hpp"
 #include "object/magicblock.hpp"
 #include "object/path_gameobject.hpp"
@@ -232,6 +233,7 @@ GameObjectFactory::init_factories()
   add_factory<InvisibleWall>("invisible_wall");
   add_factory<Ispy>("ispy");
   add_factory<Lantern>("lantern");
+  add_factory<Letter>("letter");
   add_factory<LevelTime>("leveltime");
   add_factory<MagicBlock>("magicblock");
   add_factory<ParticleZone>("particle-zone");

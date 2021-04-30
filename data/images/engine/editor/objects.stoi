@@ -309,6 +309,9 @@
   (object
     (class "skull_tile")
     (icon "images/objects/skull_tile/skull.png"))
+  (object
+    (class "letter")
+    (icon "images/objects/letter/letter-small.png"))
  )
 
  (objectgroup
