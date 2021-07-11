@@ -69,7 +69,7 @@ BadGuy::BadGuy(const Vector& pos, Direction direction, const std::string& sprite
   m_is_active_flag(),
   m_state_timer(),
   m_on_ground_flag(false),
-  m_floor_normal(),
+  m_floor_normal(0.0f, 0.0f),
   m_colgroup_active(COLGROUP_MOVING)
 {
   SoundManager::current()->preload("sounds/squish.wav");
@@ -103,7 +103,7 @@ BadGuy::BadGuy(const ReaderMapping& reader, const std::string& sprite_name_, int
   m_is_active_flag(),
   m_state_timer(),
   m_on_ground_flag(false),
-  m_floor_normal(),
+  m_floor_normal(0.0f, 0.0f),
   m_colgroup_active(COLGROUP_MOVING)
 {
   std::string dir_str = "auto";
@@ -315,15 +315,23 @@ BadGuy::collision_tile(uint32_t tile_attributes)
     m_in_water = false;
   }
 
-  if (tile_attributes & Tile::HURTS && is_hurtable()) {
-    if (tile_attributes & Tile::FIRE) {
-      if (is_flammable()) ignite();
-    }
-    else if (tile_attributes & Tile::ICE) {
-      if (is_freezable()) freeze();
-    }
-    else {
-      kill_fall();
+  if (tile_attributes & Tile::HURTS && is_hurtable())
+  {
+    Rectf hurtbox = get_bbox().grown(-6.f);
+    if (!Sector::get().is_free_of_tiles(hurtbox, true, Tile::HURTS))
+    {
+      if (tile_attributes & Tile::FIRE)
+      {
+        if (is_flammable()) ignite();
+      }
+      else if (tile_attributes & Tile::ICE)
+      {
+        if (is_freezable()) freeze();
+      }
+      else
+      {
+        kill_fall();
+      }
     }
   }
 }
@@ -510,7 +518,7 @@ BadGuy::kill_fall()
 
   if (m_frozen) {
     SoundManager::current()->play("sounds/brick.wav");
-    Vector pr_pos;
+    Vector pr_pos(0.0f, 0.0f);
     float cx = m_col.m_bbox.get_width() / 2;
     float cy = m_col.m_bbox.get_height() / 2;
     for (pr_pos.x = 0; pr_pos.x < m_col.m_bbox.get_width(); pr_pos.x += 16) {
@@ -601,8 +609,8 @@ BadGuy::set_state(State state_)
 bool
 BadGuy::is_offscreen() const
 {
-  Vector cam_dist;
-  Vector player_dist;
+  Vector cam_dist(0.0f, 0.0f);
+  Vector player_dist(0.0f, 0.0f);
   Camera& cam = Sector::get().get_camera();
   cam_dist = cam.get_center() - m_col.m_bbox.get_middle();
   if (Editor::is_active()) {
