@@ -25,7 +25,10 @@ public:
   FishSwimming(const ReaderMapping& reader);
 
   virtual void initialize() override;
+  virtual ObjectSettings get_settings() override;
   virtual void collision_solid(const CollisionHit& hit) override;
+  virtual HitResponse collision_badguy(BadGuy& badguy, const CollisionHit& hit) override;
+  virtual HitResponse collision_player(Player& player, const CollisionHit& hit);
   virtual void active_update(float dt_sec) override;
 
   virtual void freeze() override;
@@ -34,14 +37,33 @@ public:
   virtual std::string get_class() const override { return "fish-swimming"; }
   virtual std::string get_display_name() const override { return _("Swimming Fish"); }
 
+protected:
+  virtual bool collision_squished(GameObject& object) override;
+
 private:
-  enum FishState {
+  enum FishMovementState {
     SWIMMING,
     TURNING
   };
+  enum FishWaterState {
+    WATER,
+    AIR,
+    FLOP
+  };
+  enum FishSize {
+    SMALL,
+    MEDIUM,
+    LARGE
+  };
 
-  FishState state;
+  FishMovementState state;
+  FishWaterState waterstate;
+  FishSize size;
   float turn_timer;
+  float speed;
+  Timer beached_timer;
+  bool vertical;
+  bool dead;
 
 private:
   FishSwimming(const FishSwimming&) = delete;
