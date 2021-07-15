@@ -37,7 +37,7 @@ public:
   virtual void kill_fall() override;
   virtual bool is_freezable() const override;
   virtual std::string get_class() const override { return "fish"; }
-  virtual std::string get_display_name() const override { return _("Fish"); }
+  virtual std::string get_display_name() const override { return _("Jumping Fish"); }
 
 private:
   HitResponse hit(const CollisionHit& );

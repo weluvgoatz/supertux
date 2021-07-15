@@ -37,6 +37,8 @@ public:
   virtual std::string get_class() const override { return "fish-swimming"; }
   virtual std::string get_display_name() const override { return _("Swimming Fish"); }
 
+  void transition_speed(float dt_sec, float targetspeed);
+
 protected:
   virtual bool collision_squished(GameObject& object) override;
 
@@ -64,6 +66,7 @@ private:
   Timer beached_timer;
   bool vertical;
   bool dead;
+  float radius;
 
 private:
   FishSwimming(const FishSwimming&) = delete;
