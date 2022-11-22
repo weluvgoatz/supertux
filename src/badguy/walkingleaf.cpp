@@ -25,6 +25,25 @@ WalkingLeaf::WalkingLeaf(const ReaderMapping& reader) :
   max_drop_height = 16;
 }
 
+void
+WalkingLeaf::active_update(float dt_sec)
+{
+  if (!m_frozen && !m_ignited)
+  {
+    if (on_ground()) {
+      m_sprite->set_action(m_dir == Direction::LEFT ? "left" : "right");
+    }
+    else {
+      m_sprite->set_action(m_dir == Direction::LEFT ? "float-left" : "float-right");
+      if (m_physic.get_velocity_y() >= 200.f) {
+        m_physic.set_velocity_y(100.f);
+      }
+    }
+  }
+
+  WalkingBadguy::active_update(dt_sec);
+}
+
 bool
 WalkingLeaf::collision_squished(GameObject& object)
 {
