@@ -35,8 +35,8 @@ WalkingLeaf::active_update(float dt_sec)
     }
     else {
       m_sprite->set_action(m_dir == Direction::LEFT ? "float-left" : "float-right");
-      if (m_physic.get_velocity_y() >= 200.f) {
-        m_physic.set_velocity_y(100.f);
+      if (m_physic.get_velocity_y() >= 20.f) {
+        m_physic.set_velocity_y(20.f);
       }
     }
   }
