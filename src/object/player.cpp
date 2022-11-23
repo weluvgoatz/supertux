@@ -165,7 +165,7 @@ Player::Player(PlayerStatus& player_status, const std::string& name_, int player
   m_jump_early_apex(false),
   m_on_ice(false),
   m_ice_this_frame(false),
-  m_santahatsprite(SpriteManager::current()->create("images/creatures/tux/santahat.sprite")),
+  //m_santahatsprite(SpriteManager::current()->create("images/creatures/tux/santahat.sprite")),
   m_multiplayer_arrow(SpriteManager::current()->create("images/engine/hud/arrowdown.png")),
   m_tag_timer(),
   m_tag_fade(nullptr),
@@ -232,7 +232,7 @@ Player::Player(PlayerStatus& player_status, const std::string& name_, int player
   m_col.set_size(TUX_WIDTH, is_big() ? BIG_TUX_HEIGHT : SMALL_TUX_HEIGHT);
 
   m_sprite->set_angle(0.0f);
-  m_santahatsprite->set_angle(0.0f);
+  //m_santahatsprite->set_angle(0.0f);
 
   m_physic.reset();
 }
@@ -423,7 +423,7 @@ Player::update(float dt_sec)
       m_dir = (m_physic.get_velocity_x() >= 0.f) ? Direction::RIGHT : Direction::LEFT;
       m_water_jump = false;
       m_swimboosting = false;
-      m_santahatsprite->set_angle(0.f);
+      //m_santahatsprite->set_angle(0.f);
     }
     m_no_water = true;
 
@@ -528,7 +528,7 @@ Player::update(float dt_sec)
       m_sliding = false;
       m_slidejumping = false;
     }
-    m_santahatsprite->set_angle(0.f);
+    //m_santahatsprite->set_angle(0.f);
   }
 
   m_in_walljump_tile = false;
@@ -583,7 +583,7 @@ Player::update(float dt_sec)
       m_physic.set_velocity_x(0);
       if (!m_stone) {
         m_sprite->set_angle(0.0f);
-        m_santahatsprite->set_angle(0.0f);
+        //m_santahatsprite->set_angle(0.0f);
       }
 
       // if controls are currently deactivated, we take care of standing up ourselves
@@ -656,12 +656,12 @@ Player::update(float dt_sec)
     if ((m_physic.get_velocity_x() == 0) && (m_physic.get_velocity_y() == 0))
     {
       m_sprite->stop_animation();
-      m_santahatsprite->stop_animation();
+      //m_santahatsprite->stop_animation();
     }
     else if (!m_growing)
     {
       m_sprite->set_animation_loops(-1);
-      m_santahatsprite->set_animation_loops(-1);
+      //m_santahatsprite->set_animation_loops(-1);
     }
   }
 
@@ -898,7 +898,7 @@ Player::swim(float pointx, float pointy, bool boost)
   if (m_water_jump && !m_swimming && std::abs(m_physic.get_velocity_x()) < 10.f)
   {
     m_sprite->set_angle(math::degrees(m_swimming_angle));
-    m_santahatsprite->set_angle(math::degrees(m_swimming_angle));
+    //m_santahatsprite->set_angle(math::degrees(m_swimming_angle));
   }
   else
   {
@@ -908,7 +908,7 @@ Player::swim(float pointx, float pointy, bool boost)
                     math::degrees(math::PI + m_swimming_angle);
 
     m_sprite->set_angle(angle);
-    m_santahatsprite->set_angle(angle);
+    //m_santahatsprite->set_angle(angle);
 
     //Force the speed to point in the direction Tux is going
     if (m_swimming && !m_water_jump && boost)
@@ -1338,7 +1338,7 @@ Player::handle_input()
     if (!m_water_jump && !m_backflipping && !m_sliding)
     {
       m_sprite->set_angle(0);
-      m_santahatsprite->set_angle(0);
+      //m_santahatsprite->set_angle(0);
     }
     if (!m_jump_early_apex) {
       m_physic.set_gravity_modifier(1.0f);
@@ -1406,7 +1406,7 @@ Player::handle_input()
   if (m_controller->pressed(Control::DOWN) && m_player_status.bonus[get_id()] == EARTH_BONUS && !m_cooldown_timer.started() && on_ground() && !m_swimming) {
     if (m_controller->hold(Control::ACTION) && !m_ability_timer.started()) {
       m_ability_timer.start(static_cast<float>(m_player_status.max_earth_time[get_id()]) * STONE_TIME_PER_FLOWER);
-      m_santahatsprite->stop_animation();
+      //m_santahatsprite->stop_animation();
       m_stone = true;
       m_physic.set_gravity_modifier(1.0f); // Undo jump_early_apex
     }
@@ -1420,7 +1420,7 @@ Player::handle_input()
     m_cooldown_timer.start(m_ability_timer.get_timegone()/2.0f); //The longer stone form is used, the longer until it can be used again
     m_ability_timer.stop();
     m_sprite->set_angle(0.0f);
-    m_santahatsprite->set_angle(0.0f);
+    //m_santahatsprite->set_angle(0.0f);
     m_stone = false;
     for (int i = 0; i < 8; i++)
     {
@@ -1733,17 +1733,6 @@ Player::set_bonus(BonusType type, bool animate)
   }
 
   if ((type == NO_BONUS) || (type == GROWUP_BONUS)) {
-    Vector ppos = Vector((m_col.m_bbox.get_left() + m_col.m_bbox.get_right()) / 2, m_col.m_bbox.get_top());
-    Vector pspeed = Vector(((m_dir == Direction::LEFT) ? 100.0f : -100.0f), -300.0f);
-    Vector paccel = Vector(0, 1000);
-    std::string action = (m_dir == Direction::LEFT) ? "left" : "right";
-    std::string particle_name = "";
-
-    if (!particle_name.empty() && animate) {
-      Sector::get().add<SpriteParticle>("images/particles/" + particle_name + ".sprite",
-                                             action, ppos, ANCHOR_TOP, pspeed, paccel, LAYER_OBJECTS - 1, true);
-    }
-
     m_player_status.max_fire_bullets[get_id()] = 0;
     m_player_status.max_ice_bullets[get_id()] = 0;
     m_player_status.max_air_time[get_id()] = 0;
@@ -1993,11 +1982,11 @@ Player::draw(DrawingContext& context)
   {
     //TODO: Implement new santa hats
     //m_santahatsprite->set_action(m_sprite->get_action());
-    if (m_santahatsprite->get_frames() == m_sprite->get_frames())
+    /*if (m_santahatsprite->get_frames() == m_sprite->get_frames())
     {
       m_santahatsprite->set_frame(m_sprite->get_current_frame());
       m_santahatsprite->set_frame_progress(m_sprite->get_current_frame_progress());
-    }
+    }*/
   }
   /*
   // Tux is holding something
@@ -2204,7 +2193,7 @@ Player::kill(bool completely)
   m_physic.set_velocity_x(0);
 
   m_sprite->set_angle(0.0f);
-  m_santahatsprite->set_angle(0.0f);
+  //m_santahatsprite->set_angle(0.0f);
 
   if (!completely && is_big()) {
     SoundManager::current()->play("sounds/hurt.wav", get_pos());
@@ -2503,7 +2492,7 @@ Player::stop_backflipping()
   m_backflipping = false;
   m_backflip_direction = 0;
   m_sprite->set_angle(0.0f);
-  m_santahatsprite->set_angle(0.0f);
+  //m_santahatsprite->set_angle(0.0f);
 }
 
 bool

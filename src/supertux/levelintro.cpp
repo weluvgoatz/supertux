@@ -158,10 +158,17 @@ LevelIntro::draw(Compositor& compositor)
     m_player_sprite[i]->draw(context.color(), Vector((static_cast<float>(context.get_width()) - m_player_sprite[i]->get_current_hitbox_width()) / 2 - offset,
                                                 static_cast<float>(py) + m_player_sprite_py[i] - m_player_sprite[i]->get_current_hitbox_height()), LAYER_FOREGROUND1);
 
-    if (m_player_status.bonus[i] > GROWUP_BONUS) {
+    Color power_color = (m_player_status.bonus[i] == FIRE_BONUS ? Color(1.f, 0.7f, 0.5f) :
+      m_player_status.bonus[i] == ICE_BONUS ? Color(0.7f, 1.f, 1.f) :
+      m_player_status.bonus[i] == AIR_BONUS ? Color(0.7f, 1.f, 0.5f) :
+      m_player_status.bonus[i] == EARTH_BONUS ? Color(1.f, 0.9f, 0.6f) :
+      Color(1.f, 1.f, 1.f));
+
+    m_player_sprite[i]->set_color(power_color);
+    /*if (m_player_status.bonus[i] > GROWUP_BONUS) {
       m_santa_sprite[i]->draw(context.color(), Vector((static_cast<float>(context.get_width()) - m_player_sprite[i]->get_current_hitbox_width()) / 2 - offset,
                                                   static_cast<float>(py) + m_player_sprite_py[i] - m_player_sprite[i]->get_current_hitbox_height()), LAYER_FOREGROUND1);
-    }
+    }*/
 
     context.transform().alpha = 1.f;
   }
