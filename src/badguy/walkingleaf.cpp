@@ -17,6 +17,7 @@
 #include "badguy/walkingleaf.hpp"
 
 #include "sprite/sprite.hpp"
+#include "supertux/sector.hpp"
 
 WalkingLeaf::WalkingLeaf(const ReaderMapping& reader) :
   WalkingBadguy(reader, "images/creatures/walkingleaf/walkingleaf.sprite", "left", "right")
@@ -30,7 +31,11 @@ WalkingLeaf::active_update(float dt_sec)
 {
   if (!m_frozen && !m_ignited)
   {
-    if (on_ground()) {
+    Rectf floatbox = get_bbox();
+    floatbox.set_bottom(get_bbox().get_bottom() + 32.f);
+    bool float_here = (Sector::get().is_free_of_statics(floatbox));
+
+    if (!float_here) {
       m_sprite->set_action(m_dir == Direction::LEFT ? "left" : "right");
     }
     else {
