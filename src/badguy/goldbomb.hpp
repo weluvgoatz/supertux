@@ -67,7 +67,7 @@ private:
   Ticking_State tstate;
 
   std::unique_ptr<SoundSource> ticking;
-  SpritePtr m_lightsprite;
+  SpritePtr m_exploding_sprite;
 
 private:
   GoldBomb(const GoldBomb&) = delete;

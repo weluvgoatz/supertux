@@ -63,7 +63,7 @@ private:
   float time_until_explosion;
   bool is_stunned;
   float time_stunned;
-  SpritePtr m_lightsprite;
+  SpritePtr m_exploding_sprite;
 
   bool m_jumping;
   Timer m_skid_timer;

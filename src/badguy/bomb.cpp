@@ -28,7 +28,7 @@
 Bomb::Bomb(const Vector& pos, Direction dir_, const std::string& custom_sprite /*= "images/creatures/mr_bomb/mr_bomb.sprite"*/ ) :
   BadGuy( pos, dir_, custom_sprite ),
   ticking(SoundManager::current()->create_sound_source("sounds/fizz.wav")),
-  m_lightsprite(SpriteManager::current()->create("images/creatures/mr_bomb/ticking_glow/ticking_glow.sprite"))
+  m_exploding_sprite(SpriteManager::current()->create("images/creatures/mr_bomb/ticking_glow/ticking_glow.sprite"))
 {
   SoundManager::current()->preload("sounds/explosion.wav");
   set_action(dir_ == Direction::LEFT ? "ticking-left" : "ticking-right", 1);
@@ -87,10 +87,10 @@ void
 Bomb::draw(DrawingContext& context)
 {
   m_sprite->draw(context.color(), get_pos(), m_layer, m_flip);
-  m_lightsprite->set_action("exploding");
-  m_lightsprite->set_blend(Blend::ADD);
-  m_lightsprite->draw(context.light(),
-      get_pos() + Vector(get_bbox().get_width() / 2, get_bbox().get_height() / 2), m_layer, m_flip);
+  m_exploding_sprite->set_action("exploding");
+  m_exploding_sprite->set_blend(Blend::ADD);
+  m_exploding_sprite->draw(context.light(),
+    get_pos() + Vector(get_bbox().get_width() / 2, get_bbox().get_height() / 2), m_layer, m_flip);
   BadGuy::draw(context);
 }
 
