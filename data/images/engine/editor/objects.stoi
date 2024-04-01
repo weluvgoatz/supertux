@@ -250,6 +250,9 @@
     (class "pneumatic-platform")
     (icon "images/engine/editor/pneumaticplatform.png"))
   (object
+    (class "icefloe")
+    (icon "images/objects/platforms/icefloe_small.png"))
+  (object
     (class "rock")
     (icon "images/objects/rock/rock.png"))
   (object

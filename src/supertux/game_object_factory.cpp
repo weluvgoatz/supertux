@@ -100,6 +100,7 @@
 #include "object/ghost_particle_system.hpp"
 #include "object/gradient.hpp"
 #include "object/hurting_platform.hpp"
+#include "object/icefloe.hpp"
 #include "object/infoblock.hpp"
 #include "object/invisible_block.hpp"
 #include "object/invisible_wall.hpp"
@@ -267,6 +268,7 @@ GameObjectFactory::init_factories()
   add_factory<HeavyBrick>("heavy-brick", OBJ_PARAM_DISPENSABLE);
   add_factory<HeavyCoin>("heavycoin");
   add_factory<HurtingPlatform>("hurting_platform");
+  add_factory<Icefloe>("icefloe");
   add_factory<InfoBlock>("infoblock", OBJ_PARAM_DISPENSABLE);
   add_factory<InvisibleBlock>("invisible_block", OBJ_PARAM_DISPENSABLE);
   add_factory<InvisibleWall>("invisible_wall");
